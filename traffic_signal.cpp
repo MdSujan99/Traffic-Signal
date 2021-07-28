@@ -3,16 +3,23 @@
 #include<GL/glut.h>
 #include<stdio.h>
 //declarations
+float car_x = -160;
+float car_y = -540;
+float car_h = 200;
+float car_w = 100;
+int car_state = -1;//1->keep moving;-1->slow down;0->stop;
 float zb_h= 200;
 float zb_w= 40;
 void myInit();
+void timer(int);
 void myDraw();
+void keyboard(unsigned char, int , int);
 void myReshape(int, int);
 void drawSquare(float, float, float, float, float, float);
 void drawSquare(float, float, float, float, float, float);
 void drawRect(float, float, float, float, float, float, float);
 void drawZebraCrossing(int, float, float);
-void drawCar(float, float, float, float, float, float, float);
+void drawCar(float, float, float, float, float);
 
 int main(int argc, char *argv[])
 {
@@ -20,16 +27,39 @@ int main(int argc, char *argv[])
 
 	glutInitWindowPosition(0,0);
 	glutInitWindowSize(1920,1080);
-	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	glutCreateWindow("Traffic Signal");
 
     glutDisplayFunc(myDraw);
     glutReshapeFunc(myReshape);
+    glutTimerFunc(1000,timer,0);
     myInit();
 
 	glutMainLoop();
 
 	return 0;
+}
+void timer(int)
+{
+    glutPostRedisplay();
+    glutTimerFunc(1000/60,timer,0);
+    float speed = 15;
+    switch(car_state)
+    {
+        //green
+        case 1  :   break;
+
+        //yellow
+        case -1 :   speed *= -5;
+
+        //red
+        case 0  :   speed = 0;
+    }
+
+    if(car_y <= 540)
+        car_y += speed;
+    else
+        car_y = -540;
 }
 
 void myInit()
@@ -50,11 +80,10 @@ void myDraw()
 
     //zebra crossing
     drawZebraCrossing(5,-330,-100);
-    //drawRect(-310,-100,zb_w,zb_h,1,1,1);
-    //drawRect(-280,-100,zb_w,zb_h,1,1,1);
 
     //car
-    drawCar(-160,-500,200,100,1,1,0);
+    drawCar(car_x,car_y,1,1,0);
+
     //signal post
     drawRect(390,0,30,370,1,0,1);
     glBegin(GL_TRIANGLES);
@@ -62,6 +91,7 @@ void myDraw()
         glVertex2f(405,50);
         glVertex2f(430,0);
     glEnd();
+
     //signals box
     drawRect(160,280,185,65,1,0,1);
     drawSquare(345,290,50,1,0,1);
@@ -104,7 +134,15 @@ void myDraw()
         glVertex2f(960,0);
     glEnd();
 
-    glFlush();
+    glutSwapBuffers();
+    glutKeyboardFunc(keyboard);
+    //glFlush();
+}
+
+void keyboard(unsigned char key, int x, int y)
+{
+    if(key == 27)
+        exit(0);
 }
 
 void myReshape(int w, int h)
@@ -142,8 +180,10 @@ void drawRect(float x, float y, float length, float breadth, float r, float g, f
     glEnd();
 }
 
-void drawCar(float x, float y, float l, float b, float R, float G, float B)
+void drawCar(float x, float y, float R, float G, float B)
 {
+    float l = car_h;
+    float b = car_w;
     glBegin(GL_POLYGON);
         glColor3f(R,G,B);
         glVertex2f(x-20,y);//1
@@ -178,6 +218,7 @@ for( i = 1; i <= strips; i++ )
          drawRect(x+(i*10), y, zb_w, zb_h, 1,1,1);
      }
 */
+
 
 
 
