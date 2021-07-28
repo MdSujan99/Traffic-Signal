@@ -7,7 +7,7 @@ float car_x = -160;
 float car_y = -540;
 float car_h = 200;
 float car_w = 100;
-int car_state = -1;//1->keep moving;-1->slow down;0->stop;
+int car_state = 1;//1->keep moving;-1->slow down;0->stop;
 float zb_h= 200;
 float zb_w= 40;
 void myInit();
