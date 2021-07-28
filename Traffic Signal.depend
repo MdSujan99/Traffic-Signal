@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1627466898 source:/home/ubuntu2104/Dropbox/College/CG/codeblocks/Traffic Signal/traffic_signal.cpp
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+	<stdio.h>
+
