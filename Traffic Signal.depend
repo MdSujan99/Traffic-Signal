@@ -5,3 +5,10 @@
 	<GL/glut.h>
 	<stdio.h>
 
+1628780710 source:/home/ubuntu2104/Documents/OpenGL/Traffic Signal/traffic_signal.cpp
+	<GL/gl.h>
+	<GL/glu.h>
+	<GL/glut.h>
+	<stdio.h>
+	<string.h>
+
