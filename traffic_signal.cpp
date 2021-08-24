@@ -22,6 +22,7 @@ void drawZebraCrossing(int n, float x, float y);
 void drawCar(float x, float y, float R, float G, float B);
 void drawSignalPost(float x, float y, float b, float h, float R, float G, float B);
 void addText(char str[],float x, float y, float R, float G, float B);
+void drawFlag(float x, float y);
 
 int main(int argc, char *argv[])
 {
@@ -41,6 +42,63 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
+void myDraw()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glLoadIdentity();
+
+    //road
+    drawRect(-360,-540,700,1080,0,0,0);
+    drawFlag(600,0);
+    //zebra crossing
+    drawZebraCrossing(5,-330,-100);
+
+    drawCar(car_x,car_y,1,1,0);
+
+    drawSignalPost(400,0,30,370,.15,.15,.15);
+
+    addText("Hello:-",350,-100,1,1,1);
+    addText("Name : Md Sujan",350,-200,1,1,0);
+    addText("Controls:-",350,-400,1,1,1);
+    addText("R:(RED)/Stop",350,-430,1,1,1);
+    addText("Y:(YELLOW)/Slow Down",350,-460,1,1,1);
+    addText("G:(GREEN)/Keep Going",350,-490,1,1,1);
+    /*
+    glBegin(GL_LINES);
+        glColor3f(0,1,0);
+            glVertex2f(0,-540);
+            glVertex2f(0,540);
+            glVertex2f(-960,0);
+            glVertex2f(960,0);
+    glEnd();
+    */
+
+    glutSwapBuffers();
+    glutKeyboardFunc(keyboard);
+
+}
+
+void drawFlag(float x, float y)
+{
+    drawRect(x, y, 10, 500, .3,.1,.01);
+    glBegin(GL_POLYGON);
+        glVertex2f(x-10,y-10);
+        glVertex2f(x,y);
+        glVertex2f(x+10,y);
+        glVertex2f(x+20,y-10);
+    glEnd();
+    glBegin(GL_POLYGON);
+        glVertex2f(x,y+500);
+        glVertex2f(x-10,y+500+10);
+        glVertex2f(x+20,y+500+10);
+        glVertex2f(x+10,y+500);
+    glEnd();
+    drawRect(x+10, y+500-50, 300, 50, 1,0,0);
+    drawRect(x+10, y+500-100, 300, 50, 1,1,1);
+    drawRect(x+10, y+500-150, 300, 50, 0.1,.4,0);
+}
+
+
 void timer(int)
 {
     glutPostRedisplay();
@@ -68,43 +126,6 @@ void timer(int)
 void myInit()
 {
     glClearColor(.4,.4,.4,1);
-}
-
-
-void myDraw()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-    glLoadIdentity();
-
-    //road
-    drawRect(-360,-540,700,1080,0,0,0);
-
-    //zebra crossing
-    drawZebraCrossing(5,-330,-100);
-
-    drawCar(car_x,car_y,1,1,0);
-
-    drawSignalPost(400,0,30,370,.15,.15,.15);
-
-    addText("Hello:-",350,-100,1,1,1);
-    addText("Name : Md Sujan",350,-200,1,1,0);
-    addText("Controls:-",350,-400,1,1,1);
-    addText("R:(RED)/Stop",350,-430,1,1,1);
-    addText("Y:(YELLOW)/Slow Down",350,-460,1,1,1);
-    addText("G:(GREEN)/Keep Going",350,-490,1,1,1);
-    /*
-    glBegin(GL_LINES);
-        glColor3f(0,1,0);
-            glVertex2f(0,-540);
-            glVertex2f(0,540);
-            glVertex2f(-960,0);
-            glVertex2f(960,0);
-    glEnd();
-    */
-
-    glutSwapBuffers();
-    glutKeyboardFunc(keyboard);
-
 }
 
 void keyboard(unsigned char key, int x, int y)
@@ -141,7 +162,6 @@ void drawSquare(float x, float y, float length, float R, float G, float B)
         glVertex2f(x+length,y);
     glEnd();
 }
-
 
 void drawRect(float x, float y, float length, float breadth, float R, float G, float B)
 {
